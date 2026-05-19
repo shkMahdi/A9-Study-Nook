@@ -4,7 +4,13 @@ import { FaArrowRight } from 'react-icons/fa6';
 
 const Banner = () => {
     return (
-        <section className="bg-[#1C1512] text-[#EADBC8] shadow-lg">
+        <section className="bg-[#1C1512] text-[#EADBC8] shadow-lg relative overflow-hidden">
+
+            {/* Background Glow */}
+            <div className="absolute w-125 h-125 bg-[#8B5E3C]/10 blur-3xl rounded-full -top-37.5 -left-25" />
+            <div className="absolute w-125 h-125 bg-[#E0B07A]/5 blur-3xl rounded-full -bottom-30 -right-25" />
+
+
             <div className='max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between px-6 py-12 md:py-16 lg:py-20 gap-8 lg:gap-12'>
                 <div className="w-full lg:w-1/2 text-center lg:text-left flex-2 md:flex-2 order-2 lg:order-1">
 
@@ -18,16 +24,8 @@ const Banner = () => {
                     </p>
 
                     <div className="mt-8 md:mt-10 flex justify-center lg:justify-start">
-                        <button className="btn border border-[#E0B07A] 
-                            bg-transparent hover:bg-[#8A6A52] hover:border-[#8A6A52]
-                            text-white 
-                            px-7 py-5
-                            rounded-md
-                            text-sm font-light 
-                            shadow-md transition duration-300
-                            flex items-center gap-3">
+                        <button className="btn btn-outline btn-sm md:btn-lg flex items-center justify-center gap-2 px-7 py-4 rounded-md border border-[#5A4030] hover:bg-[#2D2019] transition-all duration-300 text-[#F7EBDD] font-light shadow-md">
                             Explore Rooms <FaArrowRight />
-
                         </button>
                     </div>
 

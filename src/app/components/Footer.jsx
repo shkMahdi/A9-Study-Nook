@@ -18,9 +18,9 @@ const Footer = () => {
                                 <span className="text-[#E0B07A]">📚</span>
                             </div>
 
-                            <span className="text-2xl font-bold text-[#E0B07A]">
+                            <h1 className="text-2xl font-bold text-[#E0B07A]">
                                 StudyNook
-                            </span>
+                            </h1>
                         </div>
 
                         <p className="mt-4 text-sm leading-6 text-[#C8B6A6] max-w-xs">

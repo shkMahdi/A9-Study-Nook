@@ -28,7 +28,7 @@ const Navbar = () => {
                     >
                         {links.map((link) => (
                             <li key={link.name}>
-                                <Link href={link.href} className="text-[#F3E7DA] hover:text-[#D4A373]">
+                                <Link href={link.href} className="text-[#F3E7DA] font-light hover:text-[#D4A373]">
                                     {link.name}
                                 </Link>
                             </li>
@@ -47,7 +47,7 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal gap-6 px-1 text-sm font-medium">
                     {links.map((link) => (
                         <li key={link.name}>
-                            <Link href={link.href} className="text-[#F3E7DA] hover:text-[#D4A373]">
+                            <Link href={link.href} className="text-[#F3E7DA] font-light hover:text-[#D4A373]">
                                 {link.name}
                             </Link>
                         </li>
@@ -60,12 +60,12 @@ const Navbar = () => {
 
                 {/* Auth buttons */}
                 <div className="hidden md:flex gap-3">
-                    <button className="btn btn-sm rounded-full bg-transparent border border-[#8B5E3C] text-[#EADBC8] hover:bg-[#2A241F] hover:border-[#A47148] normal-case">
+                    <Link href="/login" className="btn btn-sm md:btn-md rounded-md bg-transparent border border-[#8B5E3C] text-[#EADBC8] font-semibold hover:bg-[#2A241F] hover:border-[#A47148]">
                         Login
-                    </button>
-                    <button className="btn btn-sm rounded-full bg-[#8B5E3C] text-white hover:bg-[#6A442B] border-none normal-case">
+                    </Link>
+                    <Link href="/register" className="btn btn-sm md:btn-md rounded-md bg-[#8B5E3C] text-white  font-semibold hover:bg-[#6A442B] border-none">
                         Register
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Profile dropdown */}
