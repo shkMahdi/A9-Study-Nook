@@ -22,12 +22,12 @@ const RegisterPage = () => {
 
             <div className="relative z-10 w-full max-w-xl rounded-3xl border border-[#4A3528] bg-[#1B1411]/95 p-8 shadow-2xl backdrop-blur-sm sm:p-10">
 
-                <div className="mb-3 inline-flex items-center justify-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
+                <div className="absolute -top-4 left-4 mb-3 inline-flex items-center justify-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
                     <span>🔒</span>
                     <span>SECURE REGISTER</span>
                 </div>
 
-                <h1 className="font-black leading-tight text-[#F7EBDD] text-4xl sm:text-5xl text-left">
+                <h1 className="font-black leading-tight text-[#F7EBDD] text-4xl sm:text-5xl text-center">
                     Create an {" "}
                     <span className="italic text-[#E0B07A]">
                         account
@@ -35,7 +35,7 @@ const RegisterPage = () => {
                 </h1>
 
 
-                <p className="mt-2 text-sm leading-7 text-[#D8C1AD] sm:text-base text-left">
+                <p className="mt-2 text-sm leading-7 text-[#D8C1AD] sm:text-base text-center">
                     And start booking quiet rooms today.
                 </p>
 

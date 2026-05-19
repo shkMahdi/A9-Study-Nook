@@ -22,19 +22,19 @@ const LoginPage = () => {
 
             <div className="relative z-10 w-full max-w-xl rounded-3xl border border-[#4A3528] bg-[#1B1411]/95 p-8 shadow-2xl backdrop-blur-sm sm:p-10">
 
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
+                <div className="absolute -top-4 left-4 mb-3 inline-flex items-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
                     <span>🔒</span>
                     <span>SECURE LOGIN</span>
                 </div>
 
-                <h1 className="text-4xl font-black leading-tight text-[#F7EBDD] sm:text-5xl">
+                <h1 className="text-4xl font-black leading-tight text-[#F7EBDD] sm:text-5xl text-center">
                     Welcome{" "}
                     <span className="italic text-[#E0B07A]">
                         back
                     </span>
                 </h1>
 
-                <p className="mt-2 text-sm leading-7 text-[#D8C1AD] sm:text-base">
+                <p className="mt-2 text-sm leading-7 text-[#D8C1AD] sm:text-base text-center">
                     Sign in to continue to your StudyNook account
                 </p>
 
