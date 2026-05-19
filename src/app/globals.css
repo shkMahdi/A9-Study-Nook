@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.font-playfair {
+  font-family: var(--font-playfair);
+  font-optical-sizing: auto;
+}
+
+h1 {
+  font-family: var(--font-playfair);
+}

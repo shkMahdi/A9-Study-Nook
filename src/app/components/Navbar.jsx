@@ -37,7 +37,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Logo */}
-                <Link href="/" className="text-2xl font-bold text-[#E0B07A] ml-2">
+                <Link href="/" className="text-2xl font-bold text-[#E0B07A] ml-2 font-playfair">
                     StudyNook
                 </Link>
             </div>
