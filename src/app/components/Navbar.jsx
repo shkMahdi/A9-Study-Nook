@@ -3,7 +3,7 @@ import Link from "next/link";
 const Navbar = () => {
     const links = [
         { name: "Home", href: "/" },
-        { name: "Rooms", href: "/rooms" },
+        { name: "Rooms", href: "/all-rooms" },
         { name: "Add Room", href: "/add-room" },
         { name: "My Listings", href: "/my-listings" },
         { name: "My Bookings", href: "/my-bookings" },

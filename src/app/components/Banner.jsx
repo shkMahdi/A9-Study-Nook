@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa6';
 
@@ -24,9 +25,9 @@ const Banner = () => {
                     </p>
 
                     <div className="mt-8 md:mt-10 flex justify-center lg:justify-start">
-                        <button className="btn btn-outline btn-sm md:btn-lg flex items-center justify-center gap-2 px-7 py-4 rounded-md border border-[#5A4030] hover:bg-[#2D2019] transition-all duration-300 text-[#F7EBDD] font-light shadow-md">
+                        <Link href="/all-rooms" className="btn btn-outline btn-sm md:btn-lg flex items-center justify-center gap-2 px-7 py-4 rounded-md border border-[#5A4030] hover:bg-[#2D2019] transition-all duration-300 text-[#F7EBDD] font-light shadow-md">
                             Explore Rooms <FaArrowRight />
-                        </button>
+                        </Link>
                     </div>
 
                 </div>
