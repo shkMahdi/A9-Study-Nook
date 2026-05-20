@@ -27,9 +27,33 @@ const AddRoomPage = () => {
         );
     };
 
-    const onSubmit = (data) => {
-        const finalData = { ...data, amenities: selectedAmenities };
-        console.log(finalData);
+    const onSubmit = async (roomData) => {
+        const finalData = { 
+            ...roomData, 
+            amenities: selectedAmenities 
+        };
+        console.log('Sending room data:', finalData);
+
+        try {
+            const response = await fetch('http://localhost:5000/room', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(finalData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Response from server:', data);
+            alert('Room added successfully!');
+        } catch (error) {
+            console.error('Error adding room:', error);
+            alert('Error adding room. Check console for details.');
+        }
     };
 
     return (
