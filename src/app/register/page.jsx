@@ -5,13 +5,36 @@ import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 const RegisterPage = () => {
-
+    const router = useRouter();
     const { register, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+
         console.log(data);
+
+        const { name, email, password, photoUrl } = data;
+
+        const { data: signUpData, error } = await authClient.signUp.email({
+                email: email,
+                password: password,
+                name: name,
+                photoUrl: photoUrl
+            });
+
+        if (error) {
+
+            console.log("FULL ERROR:", JSON.stringify(error, null, 2));
+
+        } else {
+
+            console.log('Sign-up successful:', signUpData);
+
+            router.push('/login');
+        }
     };
 
     return (
