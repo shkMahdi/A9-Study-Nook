@@ -214,7 +214,7 @@ const AddRoomPage = () => {
                             </Link>
                             <button
                                 type="submit"
-                                className="flex h-12 flex-[2] items-center justify-center gap-3 rounded-xl border border-[#5A4030] bg-[#221813] text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019]"
+                                className="flex h-12 flex-2 items-center justify-center gap-3 rounded-xl border border-[#5A4030] bg-[#221813] text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019]"
                             >
                                 <FiArrowRight className="text-lg text-[#E0B07A]" />
                                 Add Room
