@@ -7,6 +7,7 @@ import { CiCalendar } from 'react-icons/ci';
 import { FaCalendar, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 import EditModal from '@/app/components/EditModal';
+import DeleteDialog from '@/app/components/DeleteDialog';
 
 const amenityIcons = {
     'Wi-Fi': <FiWifi />,
@@ -36,6 +37,7 @@ const RoomDetailPage = async ({ params }) => {
     return (
         <section className="relative min-h-screen overflow-hidden bg-[#140D09] px-6 py-16 text-[#F7EBDD]">
             <EditModal room={room}/>
+            <DeleteDialog room={room} />
             <div className="absolute -left-40 -top-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
             <div className="absolute -bottom-40 -right-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
 
@@ -150,9 +152,9 @@ const RoomDetailPage = async ({ params }) => {
                                 <label htmlFor="my_modal_7" className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-[#2D2019]  border border-[#5A4030] cursor-pointer">
                                     <span className='flex items-center justify-center gap-3'><FaEdit /> Edit </span>
                                 </label>
-                                <button className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-red-500/10  border border-[#5A4030]">
+                                <label htmlFor="my_modal_8" className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-red-500/10  border border-[#5A4030] cursor-pointer">
                                     <span className='flex items-center justify-center gap-3'><FaTrash /> Delete </span>
-                                </button>
+                                </label>
                             </div>
 
                         </div>
