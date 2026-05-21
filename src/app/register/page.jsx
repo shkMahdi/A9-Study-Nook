@@ -19,11 +19,11 @@ const RegisterPage = () => {
         const { name, email, password, image } = data;
 
         const { data: signUpData, error } = await authClient.signUp.email({
-                email: email,
-                password: password,
-                name: name,
-                image: image
-            });
+            email: email,
+            password: password,
+            name: name,
+            image: image
+        });
 
         if (error) {
 
