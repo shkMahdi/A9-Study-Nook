@@ -5,13 +5,30 @@ import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
-
+    const router = useRouter();
     const { register, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
+
+        const { data: signInData, error } = await authClient.signIn.email({
+            email: data.email,
+            password: data.password
+        });
+
+        if (error) {
+            console.log("FULL ERROR:", JSON.stringify(error, null, 2));
+            toast.error('Login failed: ' + error.message);
+        } else {
+            console.log('Sign-in successful:', signInData);
+            toast.success('Login successful!');
+            router.push('/');
+        }
     };
 
     return (

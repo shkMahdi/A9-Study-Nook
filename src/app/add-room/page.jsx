@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
+import toast from 'react-hot-toast';
 
 const AMENITIES = [
     { id: 'whiteboard', label: 'Whiteboard', icon: '🖊️' },
@@ -49,10 +50,10 @@ const AddRoomPage = () => {
 
             const data = await response.json();
             console.log('Response from server:', data);
-            alert('Room added successfully!');
+            toast.success('Room added successfully!');
         } catch (error) {
             console.error('Error adding room:', error);
-            alert('Error adding room. Check console for details.');
+            toast.error('Error adding room. Check console for details.');
         }
     };
 
