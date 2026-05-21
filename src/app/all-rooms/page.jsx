@@ -1,5 +1,6 @@
 import React from 'react';
 import RoomCard from '../components/RoomCard';
+import ScrollToTop from '../components/ScrollToTop';
 
 const AllRoomsPage = async () => {
     const res = await fetch('http://localhost:5000/room');
@@ -7,7 +8,7 @@ const AllRoomsPage = async () => {
     console.log(rooms);
     return (
         <section className="relative min-h-screen overflow-hidden bg-[#140D09] px-6 py-16 text-[#F7EBDD]">
-
+            <ScrollToTop></ScrollToTop>
             <div className="absolute -left-40 -top-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
             <div className="absolute -bottom-40 -right-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
 
