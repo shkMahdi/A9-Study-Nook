@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
+import { updateRoom } from '@/app/actions/roomActions';
 
 const AMENITIES = [
     { id: 'whiteboard', label: 'Whiteboard', icon: '🖊️' },
@@ -12,8 +14,20 @@ const AMENITIES = [
     { id: 'air_conditioning', label: 'Air Conditioning', icon: '❄️' },
 ];
 
-const EditModal = () => {
-    const [selectedAmenities, setSelectedAmenities] = useState([]);
+const EditModal = ({ room }) => {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            roomName: room?.roomName || '',
+            description: room?.description || '',
+            imageUrl: room?.imageUrl || '',
+            floor: room?.floor || '',
+            capacity: room?.capacity || '',
+            hourlyRate: room?.hourlyRate || '',
+        }
+    });
+    const [selectedAmenities, setSelectedAmenities] = useState(room?.amenities || []);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
     const toggleAmenity = (label) => {
         setSelectedAmenities(prev =>
@@ -21,6 +35,36 @@ const EditModal = () => {
                 ? prev.filter(a => a !== label)
                 : [...prev, label]
         );
+    };
+
+    const onSubmit = async (formData) => {
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const updateData = {
+                ...formData,
+                amenities: selectedAmenities,
+                capacity: parseInt(formData.capacity),
+                hourlyRate: parseFloat(formData.hourlyRate),
+            };
+
+            const result = await updateRoom(room._id, updateData);
+
+            if (!result.success) {
+                throw new Error(result.error || 'Failed to update room');
+            }
+
+            setMessage('Room updated successfully!');
+            setTimeout(() => {
+                document.getElementById('my_modal_7').checked = false;
+                setMessage('');
+            }, 1500);
+        } catch (error) {
+            setMessage('Error updating room: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -33,7 +77,7 @@ const EditModal = () => {
                     <h3 className="text-2xl font-black text-[#F7EBDD] mb-6">Edit Room</h3>
 
                     {/* Form */}
-                    <form className="space-y-4">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
                         {/* Room Name */}
                         <div>
@@ -42,7 +86,7 @@ const EditModal = () => {
                             </label>
                             <input
                                 type="text"
-                                placeholder="e.g. The Quiet Corner"
+                                {...register("roomName")}
                                 className="h-10 w-full rounded-lg border border-[#5A4030] bg-[#2A241F] px-4 text-sm text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A]"
                             />
                         </div>
@@ -53,7 +97,7 @@ const EditModal = () => {
                                 Description
                             </label>
                             <textarea
-                                placeholder="Describe your room..."
+                                {...register("description")}
                                 rows={3}
                                 className="w-full rounded-lg border border-[#5A4030] bg-[#2A241F] px-4 py-2 text-sm text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A] resize-none"
                             />
@@ -66,7 +110,7 @@ const EditModal = () => {
                             </label>
                             <input
                                 type="url"
-                                placeholder="https://example.com/room.jpg"
+                                {...register("imageUrl")}
                                 className="h-10 w-full rounded-lg border border-[#5A4030] bg-[#2A241F] px-4 text-sm text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A]"
                             />
                         </div>
@@ -79,7 +123,7 @@ const EditModal = () => {
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="3rd Floor"
+                                    {...register("floor")}
                                     className="h-10 w-full rounded-lg border border-[#5A4030] bg-[#2A241F] px-4 text-sm text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A]"
                                 />
                             </div>
@@ -89,7 +133,7 @@ const EditModal = () => {
                                 </label>
                                 <input
                                     type="number"
-                                    placeholder="4"
+                                    {...register("capacity")}
                                     className="h-10 w-full rounded-lg border border-[#5A4030] bg-[#2A241F] px-4 text-sm text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A]"
                                 />
                             </div>
@@ -104,7 +148,7 @@ const EditModal = () => {
                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#E0B07A]">$</span>
                                 <input
                                     type="number"
-                                    placeholder="5"
+                                    {...register("hourlyRate")}
                                     className="h-10 w-full rounded-lg border border-[#5A4030] bg-[#2A241F] pl-8 pr-4 text-sm text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A]"
                                 />
                             </div>
@@ -138,20 +182,42 @@ const EditModal = () => {
 
                         <div className="my-4 border-t border-[#3B2B22]" />
 
+                        {/* Message */}
+                        {message && (
+                            <div className={`rounded-lg px-4 py-2 text-xs font-semibold text-center ${
+                                message.includes('Error') 
+                                    ? 'bg-red-500/20 text-red-400' 
+                                    : 'bg-green-500/20 text-green-400'
+                            }`}>
+                                {message}
+                            </div>
+                        )}
+
                         {/* Actions */}
                         <div className="flex gap-3">
                             <label
                                 htmlFor="my_modal_7"
-                                className="flex h-10 flex-1 items-center justify-center rounded-lg border border-[#5A4030] bg-transparent text-xs font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-[#2D2019] cursor-pointer"
+                                className="flex h-10 flex-1 items-center justify-center rounded-lg border border-[#5A4030] bg-transparent text-xs font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-[#2D2019] cursor-pointer disabled:opacity-50"
+                                style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.5 : 1 }}
                             >
                                 Cancel
                             </label>
                             <button
                                 type="submit"
-                                className="flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-[#5A4030] bg-[#221813] text-xs font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019]"
+                                disabled={loading}
+                                className="flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-[#5A4030] bg-[#221813] text-xs font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                <FiArrowRight className="text-[#E0B07A]" />
-                                Save
+                                {loading ? (
+                                    <>
+                                        <span className="inline-block animate-spin">⏳</span>
+                                        Saving...
+                                    </>
+                                ) : (
+                                    <>
+                                        <FiArrowRight className="text-[#E0B07A]" />
+                                        Save
+                                    </>
+                                )}
                             </button>
                         </div>
 
