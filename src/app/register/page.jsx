@@ -16,13 +16,13 @@ const RegisterPage = () => {
 
         console.log(data);
 
-        const { name, email, password, photoUrl } = data;
+        const { name, email, password, image } = data;
 
         const { data: signUpData, error } = await authClient.signUp.email({
                 email: email,
                 password: password,
                 name: name,
-                photoUrl: photoUrl
+                image: image
             });
 
         if (error) {
@@ -97,7 +97,7 @@ const RegisterPage = () => {
 
                         <input
                             type="text"
-                            {...register("photoUrl")}
+                            {...register("image")}
                             placeholder="https://..."
                             required
                             className="h-12 w-full rounded-xl border border-[#5A4030] bg-[#2A241F] px-5 text-[#F7EBDD] outline-none transition-all duration-300 placeholder:text-[#7B6A5C] focus:border-[#E0B07A]"

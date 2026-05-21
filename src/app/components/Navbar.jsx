@@ -1,6 +1,14 @@
+"use client";
+import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+    const pathname = usePathname();
+    const { data: session, isPending } = authClient.useSession()
+    const user = session?.user;
+
     const links = [
         { name: "Home", href: "/" },
         { name: "Rooms", href: "/all-rooms" },
@@ -57,44 +65,56 @@ const Navbar = () => {
 
             {/* RIGHT */}
             <div className="navbar-end gap-3">
+                {
+                    user ? (
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="flex items-center gap-2 border border-[#3A2B22] px-3 py-1 rounded-full hover:border-[#A47148] cursor-pointer">
+                                <Image 
+                                    src={user.image || "https://via.placeholder.com/32"} 
+                                    alt={user.name} 
+                                    className="w-8 h-8 rounded-full object-cover"
+                                    width={32}
+                                    height={32}
+                                />
+                                <span className="hidden md:inline-block text-sm font-medium text-[#F3E7DA]">
+                                    {user.name}
+                                </span>
+                            </div>
 
-                {/* Auth buttons */}
-                <div className="hidden md:flex gap-3">
-                    <Link href="/login" className="btn btn-sm md:btn-md rounded-md bg-transparent border border-[#8B5E3C] text-[#EADBC8] font-semibold hover:bg-[#2A241F] hover:border-[#A47148]">
-                        Login
-                    </Link>
-                    <Link href="/register" className="btn btn-sm md:btn-md rounded-md bg-[#8B5E3C] text-white  font-semibold hover:bg-[#6A442B] border-none">
-                        Register
-                    </Link>
-                </div>
-
-                {/* Profile dropdown */}
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="flex items-center gap-2 border border-[#3A2B22] px-3 py-1 rounded-full hover:border-[#A47148] cursor-pointer">
-                        <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                        <span className="hidden md:inline-block text-sm font-medium text-[#F3E7DA]">
-                            John Doe
-                        </span>
-                    </div>
-
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content mt-3 w-44 p-2 rounded-xl bg-[#1E1A16] border border-[#3A2B22] shadow-lg z-50"
-                    >
-                        <li className="px-4 py-2 text-sm font-medium text-[#EADBC8] border-b border-[#3A2B22]">
-                            John Doe
-                        </li>
-                        <li>
-                            <a className="text-[#F3E7DA] hover:bg-[#2A241F]">My Bookings</a>
-                        </li>
-                        <li>
-                            <a className="text-[#F3E7DA] hover:bg-[#2A241F]">My Listings</a>
-                        </li>
-                        <li>
-                            <a className="text-red-400 hover:bg-[#2A241F]">Logout</a>
-                        </li>
-                    </ul>
-                </div>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content mt-3 w-44 p-2 rounded-xl bg-[#1E1A16] border border-[#3A2B22] shadow-lg z-50"
+                            >
+                                <li className="px-4 py-2 text-sm font-medium text-[#EADBC8] border-b border-[#3A2B22]">
+                                    {user.name}
+                                </li>
+                                <li>
+                                    <Link href="/my-bookings" className="text-[#F3E7DA] hover:bg-[#2A241F]">My Bookings</Link>
+                                </li>
+                                <li>
+                                    <Link href="/my-listings" className="text-[#F3E7DA] hover:bg-[#2A241F]">My Listings</Link>
+                                </li>
+                                <li>
+                                    <a 
+                                        onClick={() => authClient.signOut()}
+                                        className="text-red-400 hover:bg-[#2A241F] cursor-pointer"
+                                    >
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className="flex gap-3">
+                            <Link href="/login" className="btn btn-sm md:btn-md rounded-md bg-transparent border border-[#8B5E3C] text-[#EADBC8] font-semibold hover:bg-[#2A241F] hover:border-[#A47148]">
+                                Login
+                            </Link>
+                            <Link href="/register" className="btn btn-sm md:btn-md rounded-md bg-[#8B5E3C] text-white  font-semibold hover:bg-[#6A442B] border-none">
+                                Register
+                            </Link>
+                        </div>
+                    )
+                }
 
             </div>
         </div>
