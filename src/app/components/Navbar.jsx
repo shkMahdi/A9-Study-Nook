@@ -2,19 +2,19 @@
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-    const pathname = usePathname();
+    const router = useRouter();
     const { data: session, isPending } = authClient.useSession()
     const user = session?.user;
 
     const links = [
         { name: "Home", href: "/" },
         { name: "Rooms", href: "/all-rooms" },
-        { name: "Add Room", href: "/add-room" },
-        { name: "My Listings", href: "/my-listings" },
-        { name: "My Bookings", href: "/my-bookings" },
+        { name: "Add Room", href: `${user ? `/add-room` : `/login`}`},
+        { name: "My Listings", href: `${user ? `/my-listings` : `/login`}` },
+        { name: "My Bookings", href: `${user ? `/my-bookings` : `/login`}` },
     ];
 
     return (
@@ -96,7 +96,7 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <a 
-                                        onClick={() => authClient.signOut()}
+                                        onClick={() => {authClient.signOut(); router.push('/');}}
                                         className="text-red-400 hover:bg-[#2A241F] cursor-pointer"
                                     >
                                         Logout

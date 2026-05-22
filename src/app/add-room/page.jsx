@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
 import toast from 'react-hot-toast';
+import { authClient } from '@/lib/auth-client';
 
 const AMENITIES = [
     { id: 'whiteboard', label: 'Whiteboard', icon: '🖊️' },
@@ -16,6 +17,8 @@ const AMENITIES = [
 ];
 
 const AddRoomPage = () => {
+    const { data: session, isPending } = authClient.useSession()
+    const user = session?.user;
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [selectedAmenities, setSelectedAmenities] = useState([]);
@@ -29,9 +32,11 @@ const AddRoomPage = () => {
     };
 
     const onSubmit = async (roomData) => {
-        const finalData = { 
-            ...roomData, 
-            amenities: selectedAmenities 
+        const finalData = {
+            ...roomData,
+            amenities: selectedAmenities,
+            ownerId: user ? user.id : null,
+            ownerEmail: user ? user.email : null,
         };
         console.log('Sending room data:', finalData);
 
@@ -183,8 +188,8 @@ const AddRoomPage = () => {
                                             type="button"
                                             onClick={() => toggleAmenity(label)}
                                             className={`flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-200 ${isSelected
-                                                    ? 'border-[#E0B07A] bg-[#2D2019] text-[#E0B07A]'
-                                                    : 'border-[#5A4030] bg-[#2A241F] text-[#C8B6A6] hover:border-[#8B5E3C] hover:text-[#F7EBDD]'
+                                                ? 'border-[#E0B07A] bg-[#2D2019] text-[#E0B07A]'
+                                                : 'border-[#5A4030] bg-[#2A241F] text-[#C8B6A6] hover:border-[#8B5E3C] hover:text-[#F7EBDD]'
                                                 }`}
                                         >
                                             <span>{icon}</span>

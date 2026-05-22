@@ -4,8 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { FiUsers, FiLayers, FiClock } from 'react-icons/fi';
 import Image from 'next/image';
+import { authClient } from '@/lib/auth-client';
 
 const RoomCard = ({ room }) => {
+    const { data: session, isPending } = authClient.useSession()
+    const user = session?.user;
+
     const {
         _id,
         roomName,
@@ -96,7 +100,7 @@ const RoomCard = ({ room }) => {
                         <span className="ml-1 text-xs font-light text-[#C8B6A6]">/hr</span>
                     </div>
                     <Link
-                        href={`/all-rooms/${_id}`}
+                        href={`${user ? `/all-rooms/${_id}` : `/login`}`}
                         className="flex items-center gap-2 rounded-xl border border-[#5A4030] bg-[#221813] px-4 py-2 text-xs font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
                     >
                         View Details

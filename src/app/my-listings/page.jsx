@@ -1,11 +1,9 @@
 import React from 'react';
+import MyListingContent from '../components/MyListingContent';
 
-const MyListing = () => {
-    return (
-        <div>
-            this is my listing page
-        </div>
-    );
+const MyListing = async () => {
+
+    return <MyListingContent></MyListingContent>
 };
 
 export default MyListing;

@@ -3,11 +3,11 @@ import { FiUsers, FiLayers, FiClock, FiWifi, FiMonitor, FiZap, FiWind } from 're
 import { BsProjector } from 'react-icons/bs';
 // import { MdOutlineQuietMode } from 'react-icons/md';
 import Image from 'next/image';
-import { CiCalendar } from 'react-icons/ci';
 import { FaCalendar, FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
 import EditModal from '@/app/components/EditModal';
 import DeleteDialog from '@/app/components/DeleteDialog';
+import BookingModal from '@/app/components/BookingModal';
 
 const amenityIcons = {
     'Wi-Fi': <FiWifi />,
@@ -19,6 +19,7 @@ const amenityIcons = {
 };
 
 const RoomDetailPage = async ({ params }) => {
+
     const { id } = await params;
     const res = await fetch(`http://localhost:5000/room/${id}`);
     const room = await res.json();
@@ -36,8 +37,9 @@ const RoomDetailPage = async ({ params }) => {
 
     return (
         <section className="relative min-h-screen overflow-hidden bg-[#140D09] px-6 py-16 text-[#F7EBDD]">
-            <EditModal room={room}/>
+            <EditModal room={room} />
             <DeleteDialog room={room} />
+            <BookingModal room={room} />
             <div className="absolute -left-40 -top-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
             <div className="absolute -bottom-40 -right-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
 
@@ -141,11 +143,10 @@ const RoomDetailPage = async ({ params }) => {
 
                             <div className="mb-5 h-px w-full bg-[#3A2B22]" />
 
-                            {/* <BookingForm roomId={_id} hourlyRate={hourlyRate} /> */}
                             <div>
-                                <button className="w-full rounded-xl bg-[#E0B07A] px-6 py-3 font-semibold text-[#1B1411] hover:bg-[#D4A06A]">
+                                <label htmlFor="my_modal_9" className="flex justify-center w-full rounded-xl bg-[#E0B07A] px-6 py-3 font-semibold text-[#1B1411] hover:bg-[#D4A06A]">
                                     <span className='flex items-center justify-center gap-3'><FaCalendar /> Book Now</span>
-                                </button>
+                                </label>
                             </div>
 
                             <div className="flex justify-between gap-2 mt-3">
