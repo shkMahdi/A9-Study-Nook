@@ -36,7 +36,7 @@ const features = [
 
 const WhyStudyNook = () => {
     return (
-        <section className="relative overflow-hidden bg-[#140D09] px-6 py-24 text-[#F7EBDD]">
+        <section className="relative overflow-hidden bg-[#1C1512] px-6 py-24 text-[#F7EBDD] border-t border-[#3A2B22]">
 
             <div className="absolute -right-40 top-0 h-96 w-96 rounded-full border border-[#3B2B22]" />
             <div className="absolute -left-40 bottom-0 h-64 w-64 rounded-full border border-[#3B2B22]" />
@@ -44,7 +44,7 @@ const WhyStudyNook = () => {
             <div className="relative z-10 mx-auto max-w-6xl">
 
                 {/* Header */}
-                <div className="mb-16 max-w-xl">
+                <div className="mb-8 max-w-xl">
                     <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
                         <span>✦</span>
                         <span>WHY STUDYNOOK</span>

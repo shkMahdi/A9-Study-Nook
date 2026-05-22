@@ -37,6 +37,7 @@ const AddRoomPage = () => {
             amenities: selectedAmenities,
             ownerId: user ? user.id : null,
             ownerEmail: user ? user.email : null,
+            createdAt: new Date(),
         };
         console.log('Sending room data:', finalData);
 

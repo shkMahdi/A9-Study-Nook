@@ -31,7 +31,7 @@ const steps = [
 
 const HowItWorks = () => {
     return (
-        <section className="relative overflow-hidden bg-[#1B1411] px-6 py-24 text-[#F7EBDD]">
+        <section className="relative overflow-hidden bg-[#140D09] px-6 py-24 text-[#F7EBDD] border-t border-[#3A2B22]">
 
             <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full border border-[#3B2B22]" />
             <div className="absolute -bottom-32 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full border border-[#3B2B22]" />
@@ -39,16 +39,16 @@ const HowItWorks = () => {
             <div className="relative z-10 mx-auto max-w-6xl">
 
                 {/* Header */}
-                <div className="mb-16 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
+                <div className="mb-8 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
                     <div className="max-w-xl">
                         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
                             <span>⚡</span>
                             <span>HOW IT WORKS</span>
                         </div>
-                        <h2 className="text-4xl font-black leading-tight text-[#F7EBDD] sm:text-5xl">
+                        <h1 className="text-4xl font-black leading-tight text-[#F7EBDD] sm:text-5xl">
                             Book a room in{' '}
                             <span className="italic text-[#E0B07A]">4 easy steps</span>
-                        </h2>
+                        </h1>
                         <p className="mt-4 text-sm font-light leading-relaxed text-[#C8B6A6]">
                             No hassle, no waiting, find a room, pick your slot, and get to work.
                         </p>
