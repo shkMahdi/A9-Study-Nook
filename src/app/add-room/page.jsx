@@ -59,7 +59,7 @@ const AddRoomPage = () => {
             toast.success('Room added successfully!');
         } catch (error) {
             console.error('Error adding room:', error);
-            toast.error('Error adding room. Check console for details.');
+            toast.error(error.message || 'Failed to add room');
         }
     };
 

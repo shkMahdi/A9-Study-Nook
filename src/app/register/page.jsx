@@ -7,6 +7,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
     const router = useRouter();
@@ -26,13 +27,11 @@ const RegisterPage = () => {
         });
 
         if (error) {
-
             console.log("FULL ERROR:", JSON.stringify(error, null, 2));
-
+            toast.error(error.message || 'Registration failed');
         } else {
-
             console.log('Sign-up successful:', signUpData);
-
+            toast.success('Account created! Please log in.');
             router.push('/login');
         }
     };

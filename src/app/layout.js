@@ -33,7 +33,22 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
         {children}
-        <Toaster></Toaster>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "#1B1411",
+              color: "#F7EBDD",
+              border: "1px solid #4A3528",
+            },
+            success: {
+              iconTheme: { primary: "#E0B07A", secondary: "#1B1411" },
+            },
+            error: {
+              iconTheme: { primary: "#f87171", secondary: "#1B1411" },
+            },
+          }}
+        />
         <Footer></Footer>
       </body>
     </html>

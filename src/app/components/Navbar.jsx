@@ -3,6 +3,7 @@ import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -93,7 +94,11 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <a
-                                        onClick={() => { authClient.signOut(); router.push('/'); }}
+                                        onClick={async () => {
+                                            await authClient.signOut();
+                                            toast.success('Logged out successfully');
+                                            router.push('/');
+                                        }}
                                         className="text-red-400 hover:bg-[#2A241F] cursor-pointer"
                                     >
                                         Logout

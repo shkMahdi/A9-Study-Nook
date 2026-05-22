@@ -1,9 +1,11 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiArrowRight, FiCalendar } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 
 const TIME_SLOTS = [
     '08:00', '09:00', '10:00', '11:00', '12:00',
@@ -12,9 +14,11 @@ const TIME_SLOTS = [
 ];
 
 const BookingModal = ({ room }) => {
+    const { data: session, isPending } = authClient.useSession()
+    // if (isPending) return null;
+    const user = session?.user;
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
     const [totalCost, setTotalCost] = useState(0);
 
     const { register, handleSubmit, watch, reset } = useForm();
@@ -39,7 +43,6 @@ const BookingModal = ({ room }) => {
 
     const onSubmit = async (data) => {
         setLoading(true);
-        setMessage('');
 
         try {
             const bookingData = {
@@ -50,6 +53,7 @@ const BookingModal = ({ room }) => {
                 endTime: data.endTime,
                 totalCost,
                 note: data.note || '',
+                userEmail: user.email,
             };
 
             const res = await fetch('http://localhost:5000/bookings', {
@@ -62,20 +66,17 @@ const BookingModal = ({ room }) => {
             const result = await res.json();
 
             if (!res.ok) {
-                throw new Error(result.error || 'Failed to book room');
+                throw new Error(result.error || result.message || 'Failed to book room');
             }
 
-            setMessage('Room booked successfully!');
+            toast.success('Room booked successfully!');
             reset();
             setTotalCost(0);
-
-            setTimeout(() => {
-                document.getElementById('my_modal_9').checked = false;
-                router.push('/my-bookings');
-            }, 1000);
+            document.getElementById('my_modal_9').checked = false;
+            router.push('/my-bookings');
 
         } catch (error) {
-            setMessage('Error: ' + error.message);
+            toast.error(error.message || 'Failed to book room');
         } finally {
             setLoading(false);
         }
@@ -104,17 +105,6 @@ const BookingModal = ({ room }) => {
                     <p className="mb-6 text-center text-xs text-[#8B5E3C]">
                         ${room?.hourlyRate}/hr · Fill in your preferred slot below
                     </p>
-
-                    {/* Message */}
-                    {message && (
-                        <div className={`mb-4 rounded-lg px-4 py-2 text-xs font-semibold text-center ${
-                            message.includes('Error')
-                                ? 'bg-red-500/20 text-red-400'
-                                : 'bg-green-500/20 text-green-400'
-                        }`}>
-                            {message}
-                        </div>
-                    )}
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
@@ -191,7 +181,7 @@ const BookingModal = ({ room }) => {
                         {/* Actions */}
                         <div className="flex gap-3 pt-1">
                             <label
-                                htmlFor="booking_modal"
+                                htmlFor="my_modal_9"
                                 className="flex h-10 flex-1 cursor-pointer items-center justify-center rounded-lg border border-[#5A4030] bg-transparent text-xs font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-[#2D2019]"
                                 style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.5 : 1 }}
                             >

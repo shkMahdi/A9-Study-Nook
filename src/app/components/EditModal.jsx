@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
 import { updateRoom } from '@/app/actions/roomActions';
+import toast from 'react-hot-toast';
 
 const AMENITIES = [
     { id: 'whiteboard', label: 'Whiteboard', icon: '🖊️' },
@@ -27,7 +28,6 @@ const EditModal = ({ room }) => {
     });
     const [selectedAmenities, setSelectedAmenities] = useState(room?.amenities || []);
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
 
     const toggleAmenity = (label) => {
         setSelectedAmenities(prev =>
@@ -39,7 +39,6 @@ const EditModal = ({ room }) => {
 
     const onSubmit = async (formData) => {
         setLoading(true);
-        setMessage('');
 
         try {
             const updateData = {
@@ -55,13 +54,10 @@ const EditModal = ({ room }) => {
                 throw new Error(result.error || 'Failed to update room');
             }
 
-            setMessage('Room updated successfully!');
-            setTimeout(() => {
-                document.getElementById('my_modal_7').checked = false;
-                setMessage('');
-            }, 1500);
+            toast.success('Room updated successfully!');
+            document.getElementById('my_modal_7').checked = false;
         } catch (error) {
-            setMessage('Error updating room: ' + error.message);
+            toast.error(error.message || 'Failed to update room');
         } finally {
             setLoading(false);
         }
@@ -181,17 +177,6 @@ const EditModal = ({ room }) => {
                         </div>
 
                         <div className="my-4 border-t border-[#3B2B22]" />
-
-                        {/* Message */}
-                        {message && (
-                            <div className={`rounded-lg px-4 py-2 text-xs font-semibold text-center ${
-                                message.includes('Error') 
-                                    ? 'bg-red-500/20 text-red-400' 
-                                    : 'bg-green-500/20 text-green-400'
-                            }`}>
-                                {message}
-                            </div>
-                        )}
 
                         {/* Actions */}
                         <div className="flex gap-3">
