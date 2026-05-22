@@ -13,7 +13,7 @@ const FeaturedRooms = () => {
 
     useEffect(() => {
 
-        fetch("http://localhost:5000/room")
+        fetch("http://localhost:5000/featured-rooms")
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {

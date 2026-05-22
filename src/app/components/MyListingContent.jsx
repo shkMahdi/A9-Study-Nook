@@ -61,7 +61,7 @@ const MyListingContent = () => {
 
 
             {rooms.length === 0 ? (
-                <div className=" max-w-7xl py-5 mx-auto border border-[#3B2B22] rounded-lg p-5 shadow-lg backdrop-blur-sm bg-[#1B1411]/95">
+                <div className=" max-w-4xl py-5 mx-auto border border-[#3B2B22] rounded-lg p-5 shadow-lg backdrop-blur-sm bg-[#1B1411]/95">
                     <div className="relative z-10 mx-auto max-w-2xl text-center py-8">
                         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#4A3528] bg-[#211611] px-4 py-2 text-xs tracking-wide text-[#E0B07A]">
                             <span>📋</span>
@@ -75,21 +75,18 @@ const MyListingContent = () => {
                             Got a room? List it and start earning.
                         </p>
 
-                        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Link
-                                href="/add-room"
-                                className="btn btn-outline btn-sm md:btn-lg flex items-center justify-center gap-2 px-7 py-4 rounded-md border border-[#5A4030] bg-[#8B5E3C] hover:bg-[#6A442B] transition-all duration-300 text-[#F7EBDD] font-semibold shadow-md"
-                            >
-                                List a Room
-                                <FiArrowRight />
-                            </Link>
-
+                        <div className="mt-10 flex flex-row sm:flex-row items-center justify-center gap-4">
                             <Link
                                 href="/all-rooms"
-                                className="btn btn-outline btn-sm md:btn-lg flex items-center justify-center gap-2 px-7 py-4 rounded-md border border-[#5A4030] bg-[#221813] hover:bg-[#2D2019] transition-all duration-300 text-[#F7EBDD] font-light shadow-md"
+                                className="flex shrink-0 items-center gap-2 rounded-xl border border-[#5A4030] bg-[#221813] px-5 py-3 text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
                             >
-                                <FiBookOpen />
-                                Browse All Rooms
+                                Brows Rooms →
+                            </Link>
+                            <Link
+                                href="/add-roomm"
+                                className="flex shrink-0 items-center gap-2 rounded-xl border border-[#5A4030] bg-[#E0B07A]/50 px-5 py-3 text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
+                            >
+                                Add Room →
                             </Link>
                         </div>
                     </div>
