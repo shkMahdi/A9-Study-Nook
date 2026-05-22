@@ -21,7 +21,12 @@ const amenityIcons = {
 const RoomDetailPage = async ({ params }) => {
 
     const { id } = await params;
-    const res = await fetch(`http://localhost:5000/room/${id}`);
+    const res = await fetch(`http://localhost:5000/room/${id}`, { cache: 'no-store' });
+
+    if (!res.ok) {
+        throw new Error('Room not found');
+    }
+
     const room = await res.json();
 
     const {

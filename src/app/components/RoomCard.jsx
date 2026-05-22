@@ -100,7 +100,8 @@ const RoomCard = ({ room }) => {
                         <span className="ml-1 text-xs font-light text-[#C8B6A6]">/hr</span>
                     </div>
                     <Link
-                        href={`${user ? `/all-rooms/${_id}` : `/login`}`}
+                        // href={`${user ? `/all-rooms/${_id}` : `/login`}`}
+                        href={`/all-rooms/${_id}`}
                         className="flex items-center gap-2 rounded-xl border border-[#5A4030] bg-[#221813] px-4 py-2 text-xs font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
                     >
                         View Details
