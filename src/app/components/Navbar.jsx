@@ -2,20 +2,35 @@
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
+    const pathname = usePathname();
     const router = useRouter();
     const { data: session, isPending } = authClient.useSession()
+    if (isPending) return null;
     const user = session?.user;
 
-    const links = [
+    const navLinks = [
         { name: "Home", href: "/" },
         { name: "Rooms", href: "/all-rooms" },
-        { name: "Add Room", href: `${user ? `/add-room` : `/login`}`},
+        { name: "Add Room", href: `${user ? `/add-room` : `/login`}` },
         { name: "My Listings", href: `${user ? `/my-listings` : `/login`}` },
         { name: "My Bookings", href: `${user ? `/my-bookings` : `/login`}` },
     ];
+
+
+    const links = navLinks.map(({ name, href }) => (
+        <li key={name}>
+            <Link
+                href={href}
+                className={pathname === href ? "text-[#D4A373] font-bold hover:text-[#D4A373]" : "text-[#F3E7DA] font-bold hover:text-[#D4A373]"}
+            >
+                {name}
+            </Link>
+        </li>
+    ));
+
 
     return (
         <div className="navbar bg-[#1E1A16] border-b border-[#3A2B22] shadow-[0_2px_10px_rgba(0,0,0,0.25)] px-4 md:px-6">
@@ -34,13 +49,7 @@ const Navbar = () => {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content mt-3 w-52 p-2 rounded-xl bg-[#1E1A16] border border-[#3A2B22] shadow-lg z-50"
                     >
-                        {links.map((link) => (
-                            <li key={link.name}>
-                                <Link href={link.href} className="text-[#F3E7DA] font-light hover:text-[#D4A373]">
-                                    {link.name}
-                                </Link>
-                            </li>
-                        ))}
+                        {links}
                     </ul>
                 </div>
 
@@ -53,13 +62,7 @@ const Navbar = () => {
             {/* CENTER (desktop menu) */}
             <div className="navbar-center hidden md:flex">
                 <ul className="menu menu-horizontal gap-6 px-1 text-sm font-medium">
-                    {links.map((link) => (
-                        <li key={link.name}>
-                            <Link href={link.href} className="text-[#F3E7DA] font-light hover:text-[#D4A373]">
-                                {link.name}
-                            </Link>
-                        </li>
-                    ))}
+                    {links}
                 </ul>
             </div>
 
@@ -69,9 +72,9 @@ const Navbar = () => {
                     user ? (
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="flex items-center gap-2 border border-[#3A2B22] px-3 py-1 rounded-full hover:border-[#A47148] cursor-pointer">
-                                <Image 
-                                    src={user.image || "https://via.placeholder.com/32"} 
-                                    alt={user.name} 
+                                <Image
+                                    src={user.image || "https://via.placeholder.com/32"}
+                                    alt={user.name}
                                     className="w-8 h-8 rounded-full object-cover"
                                     width={32}
                                     height={32}
@@ -89,14 +92,8 @@ const Navbar = () => {
                                     {user.name}
                                 </li>
                                 <li>
-                                    <Link href="/my-bookings" className="text-[#F3E7DA] hover:bg-[#2A241F]">My Bookings</Link>
-                                </li>
-                                <li>
-                                    <Link href="/my-listings" className="text-[#F3E7DA] hover:bg-[#2A241F]">My Listings</Link>
-                                </li>
-                                <li>
-                                    <a 
-                                        onClick={() => {authClient.signOut(); router.push('/');}}
+                                    <a
+                                        onClick={() => { authClient.signOut(); router.push('/'); }}
                                         className="text-red-400 hover:bg-[#2A241F] cursor-pointer"
                                     >
                                         Logout
