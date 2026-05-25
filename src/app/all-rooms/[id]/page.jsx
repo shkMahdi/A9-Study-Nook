@@ -8,6 +8,8 @@ import { FaEdit } from 'react-icons/fa';
 import EditModal from '@/app/components/EditModal';
 import DeleteDialog from '@/app/components/DeleteDialog';
 import BookingModal from '@/app/components/BookingModal';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 const amenityIcons = {
     'Wi-Fi': <FiWifi />,
@@ -21,13 +23,23 @@ const amenityIcons = {
 const RoomDetailPage = async ({ params }) => {
 
     const { id } = await params;
-    const res = await fetch(`http://localhost:5000/room/${id}`, { cache: 'no-store' });
+    const requestHeaders = await headers();
+    const { token } = await auth.api.getToken({ headers: requestHeaders });
+    const session = await auth.api.getSession({ headers: requestHeaders });
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room/${id}`, { 
+        headers: {
+            authorization: `Bearer ${token}`
+        },
+        cache: 'no-store' 
+    });
 
     if (!res.ok) {
         throw new Error('Room not found');
     }
 
     const room = await res.json();
+    const isOwner = session?.user?.email === room.ownerEmail;
 
     const {
         _id,
@@ -42,8 +54,8 @@ const RoomDetailPage = async ({ params }) => {
 
     return (
         <section className="relative min-h-screen overflow-hidden bg-[#140D09] px-6 py-16 text-[#F7EBDD]">
-            <EditModal room={room} />
-            <DeleteDialog room={room} />
+            {isOwner && <EditModal room={room} />}
+            {isOwner && <DeleteDialog room={room} />}
             <BookingModal room={room} />
             <div className="absolute -left-40 -top-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
             <div className="absolute -bottom-40 -right-40 h-128 w-lg rounded-full border border-[#3B2B22]" />
@@ -83,9 +95,10 @@ const RoomDetailPage = async ({ params }) => {
 
                         {/* Title + Meta */}
                         <div className="rounded-2xl border border-[#3A2B22] bg-[#1E1A16] p-6">
-                            <h1 className="mb-3 text-3xl font-black leading-tight text-[#F7EBDD] sm:text-4xl">
+                            <h1 className="mb-1 text-3xl font-black leading-tight text-[#F7EBDD] sm:text-4xl">
                                 {roomName}
                             </h1>
+                            <p className="mb-3 text-sm text-[#8B5E3C]">Listed by {room.ownerEmail}</p>
 
                             <div className="mb-5 flex flex-wrap gap-4">
                                 <div className="flex items-center gap-2 text-sm text-[#C8B6A6]">
@@ -154,14 +167,16 @@ const RoomDetailPage = async ({ params }) => {
                                 </label>
                             </div>
 
-                            <div className="flex justify-between gap-2 mt-3">
-                                <label htmlFor="my_modal_7" className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-[#2D2019]  border border-[#5A4030] cursor-pointer">
-                                    <span className='flex items-center justify-center gap-3'><FaEdit /> Edit </span>
-                                </label>
-                                <label htmlFor="my_modal_8" className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-red-500/10  border border-[#5A4030] cursor-pointer">
-                                    <span className='flex items-center justify-center gap-3'><FaTrash /> Delete </span>
-                                </label>
-                            </div>
+                            {isOwner && (
+                                <div className="flex justify-between gap-2 mt-3">
+                                    <label htmlFor="my_modal_7" className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-[#2D2019]  border border-[#5A4030] cursor-pointer">
+                                        <span className='flex items-center justify-center gap-3'><FaEdit /> Edit </span>
+                                    </label>
+                                    <label htmlFor="my_modal_8" className="w-full rounded-xl bg-transparent px-6 py-3 font-semibold text-[#C8B6A6] transition-all duration-300 hover:bg-red-500/10  border border-[#5A4030] cursor-pointer">
+                                        <span className='flex items-center justify-center gap-3'><FaTrash /> Delete </span>
+                                    </label>
+                                </div>
+                            )}
 
                         </div>
                     </div>

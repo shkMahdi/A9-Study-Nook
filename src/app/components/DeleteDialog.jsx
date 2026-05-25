@@ -19,7 +19,7 @@ const DeleteDialog = ({ room }) => {
 
         try {
             const res = await fetch(
-                `http://localhost:5000/room/${room._id}`,
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/room/${room._id}`,
                 { method: 'DELETE' }
             );
 

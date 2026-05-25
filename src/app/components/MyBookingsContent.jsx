@@ -45,15 +45,15 @@ const MyBookingsContent = () => {
 
     const fetchBookings = async (email) => {
         const [bookingsRes, roomsRes] = await Promise.all([
-            fetch(`http://localhost:5000/bookings/user/${email}`),
-            fetch("http://localhost:5000/room"),
+            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/user/${email}`),
+            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room`),
         ]);
 
         const bookingsData = await bookingsRes.json();
         const roomsData = await roomsRes.json();
 
         const images = {};
-        if (Array.isArray(roomsData)) {
+        if (Array.isArray(roomsData)) { 
             roomsData.forEach((room) => {
                 images[room._id] = room.imageUrl;
             });
@@ -127,7 +127,7 @@ const MyBookingsContent = () => {
                 ) : (
                     <div className="overflow-hidden rounded-2xl border border-[#3B2B22] bg-[#1B1411]/95 shadow-lg">
                         <div className="overflow-x-auto">
-                            <table className="w-full min-w-[720px] text-left text-sm">
+                            <table className="w-full min-w-180 text-left text-sm">
                                 <thead>
                                     <tr className="border-b border-[#3B2B22] text-[10px] font-semibold uppercase tracking-widest text-[#8B5E3C]">
                                         <th className="px-6 py-4">Room</th>

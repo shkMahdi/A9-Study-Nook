@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 const AMENITIES = [
     { id: 'whiteboard', label: 'Whiteboard', icon: '🖊️' },
@@ -19,6 +20,7 @@ const AMENITIES = [
 const AddRoomPage = () => {
     const { data: session, isPending } = authClient.useSession()
     const user = session?.user;
+    const router = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [selectedAmenities, setSelectedAmenities] = useState([]);
@@ -42,7 +44,7 @@ const AddRoomPage = () => {
         console.log('Sending room data:', finalData);
 
         try {
-            const response = await fetch('http://localhost:5000/room', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,6 +59,7 @@ const AddRoomPage = () => {
             const data = await response.json();
             console.log('Response from server:', data);
             toast.success('Room added successfully!');
+            router.push('/my-listings');
         } catch (error) {
             console.error('Error adding room:', error);
             toast.error(error.message || 'Failed to add room');

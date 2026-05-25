@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 export async function updateRoom(roomId, updateData) {
     try {
-        const response = await fetch(`http://localhost:5000/room/${roomId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room/${roomId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function updateRoom(roomId, updateData) {
 
 export async function deleteRoom(roomId) {
     try {
-        const response = await fetch(`http://localhost:5000/room/${roomId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room/${roomId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

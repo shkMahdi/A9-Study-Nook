@@ -27,7 +27,7 @@ const MyListingContent = () => {
         }
 
         setIsLoading(true);
-        fetch(`http://localhost:5000/room/user/${user.email}`)
+        fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room/user/${user.email}`)
             .then(res => res.json())
             .then(data => setRooms(data))
             .finally(() => setIsLoading(false));
@@ -80,10 +80,10 @@ const MyListingContent = () => {
                                 href="/all-rooms"
                                 className="flex shrink-0 items-center gap-2 rounded-xl border border-[#5A4030] bg-[#221813] px-5 py-3 text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
                             >
-                                Brows Rooms →
+                                Browse Rooms →
                             </Link>
                             <Link
-                                href="/add-roomm"
+                                href="/add-room"
                                 className="flex shrink-0 items-center gap-2 rounded-xl border border-[#5A4030] bg-[#E0B07A]/50 px-5 py-3 text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
                             >
                                 Add Room →

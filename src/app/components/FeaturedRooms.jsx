@@ -13,7 +13,7 @@ const FeaturedRooms = () => {
 
     useEffect(() => {
 
-        fetch("http://localhost:5000/featured-rooms")
+        fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured-rooms`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {

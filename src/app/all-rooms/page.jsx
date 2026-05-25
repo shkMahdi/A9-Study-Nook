@@ -3,7 +3,7 @@ import RoomCard from '../components/RoomCard';
 import ScrollToTop from '../components/ScrollToTop';
 
 const AllRoomsPage = async () => {
-    const res = await fetch('http://localhost:5000/room');
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/room`);
     const rooms = await res.json();
     console.log(rooms);
     return (

@@ -39,7 +39,7 @@ const Banner = () => {
                             Explore Rooms →
                         </Link>
                         <Link
-                            href="/add-roomm"
+                            href="/add-room"
                             className="flex shrink-0 items-center gap-2 rounded-xl border border-[#5A4030] bg-[#E0B07A]/50 px-5 py-3 text-sm font-semibold text-[#F7EBDD] transition-all duration-300 hover:bg-[#2D2019] hover:border-[#8B5E3C]"
                         >
                             Add Room →
