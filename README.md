@@ -1,5 +1,7 @@
 # StudyNook
 
+🔗 **Live Demo**: [https://study-nook-ivory.vercel.app](https://study-nook-ivory.vercel.app)
+
 A full-stack room booking platform where users can list, discover, and reserve study rooms by the hour.
 
 ---
